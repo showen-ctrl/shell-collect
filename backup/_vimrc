@@ -1,0 +1,268 @@
+source $VIMRUNTIME/vimrc_example.vim
+
+:colorscheme desert
+
+let g:snipMate = { 'snippet_version' : 1 }
+
+if get(s:, 'loaded', 0) != 0
+	finish
+else
+	let s:loaded = 1
+endif
+
+let s:home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+
+command! -nargs=1 LoadScript exec 'so '.s:home.'/'.'<args>'
+
+exec 'set rtp+='.s:home
+
+set nocompatible
+
+set bs=eol,start,indent
+
+set autoindent
+
+set cindent
+
+set winaltkeys=no
+
+set nowrap
+
+set ttimeout
+
+set ttimeoutlen=50
+
+set ruler
+
+set ignorecase
+
+set smartcase
+
+set hlsearch
+
+set incsearch
+
+if has('multi_byte')
+	set encoding=utf-8
+
+	set fileencoding=utf-8
+
+	set fileencodings=ucs-bom,utf-8,gbk,gb18030,big5,euc-jp,latin1
+endif
+
+if has('autocmd')
+	filetype plugin indent on
+endif
+
+if has('syntax')  
+	syntax enable
+	syntax on
+endif
+set lines=35 columns=140
+
+set showmatch
+
+set matchtime=2
+
+set display=lastline
+
+set wildmenu
+
+set lazyredraw
+
+set errorformat+=[%f:%l]\ ->\ %m,[%f:%l]:%m
+
+set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
+
+set tags=./.tags;,.tags
+
+set formatoptions+=m
+
+set formatoptions+=B
+
+set ffs=unix,dos,mac
+
+set nobackup
+set noswapfile
+set history=1024
+set autochdir
+set whichwrap=b,s,<,>,[,]
+set nobomb
+set clipboard+=unnamed
+
+if has('folding')
+	set foldenable
+
+	set fdm=indent
+
+	set foldlevel=99
+endif
+
+let mapleader=","
+
+nmap <leader>s :source $MYVIMRC<cr>
+nmap <leader>e :e $MYVIMRC<cr>
+
+nmap <leader>tn :tabnew<cr>
+nmap <leader>tc :tabclose<cr>
+nmap <leader>th :tabp<cr>
+nmap <leader>tl :tabn<cr>
+
+nmap <C-j> <C-W>j
+nmap <C-k> <C-W>k
+nmap <C-h> <C-W>h
+nmap <C-l> <C-W>l
+
+nnoremap <M-j> :resize +5<cr>
+nnoremap <M-k> :resize -5<cr>
+nnoremap <M-h> :vertical resize -5<cr>
+nnoremap <M-l> :vertical resize +5<cr>
+
+inoremap <M-j> <Down>
+inoremap <M-k> <Up>
+inoremap <M-h> <left>
+inoremap <M-l> <Right>
+
+inoremap <C-BS> <Esc>bdei
+
+nnoremap vv ^vg_
+cnoremap <C-a> <home>
+cnoremap <C-e> <end>
+
+nnoremap <F2> :setlocal number!<cr>
+nnoremap <leader>w :set wrap!<cr>
+vnoremap <BS> d
+
+cmap <C-V> <C-R>+
+cmap <S-Insert> <C-R>+
+
+exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
+exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
+
+nmap <silent> <leader>ex :!start explorer %:p:h<CR>
+
+nmap <silent> <leader>cmd :!start cmd /k cd %:p:h<cr>
+
+nmap <F3> a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
+
+let NERDTreeBookmarksFile = $VIM . '/NERDTreeBookmarks'
+
+nmap ,fn :let @*=substitute(expand("%"), "/", "\\", "g")<CR>
+nmap ,fp :let @*=substitute(expand("%:p"), "/", "\\", "g")<CR>
+
+nnoremap <C-left> :bn<CR>
+nnoremap <C-right> :bp<CR>
+
+filetype off
+
+set rtp+=$VIM/vimfiles/bundle/Vundle.vim
+call vundle#begin('$VIM/vimfiles/bundle')
+
+Plugin 'scrooloose/nerdtree'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'xuyuanp/nerdtree-git-plugin'
+Plugin 'jistr/vim-nerdtree-tabs'
+
+let NERDTreeIgnore=['.idea', '.vscode', 'node_modules', '*.pyc']
+let NERDTreeBookmarksFile = $VIM . '/NERDTreeBookmarks'
+let NERDTreeMinimalUI = 1
+let NERDTreeBookmarksSort = 1
+let NERDTreeShowLineNumbers = 0
+let NERDTreeShowBookmarks = 1
+let g:nerdtree_tabs_open_on_gui_startup=0
+let g:NERDTreeWinPos = 'left'
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+		\ 'Modified'  :'✹',
+		\ 'Staged'    :'✚',
+		\ 'Untracked' :'✭',
+		\ 'Renamed'   :'➜',
+		\ 'Unmerged'  :'═',
+		\ 'Deleted'   :'✖',
+		\ 'Dirty'     :'✗',
+		\ 'Ignored'   :'☒',
+		\ 'Clean'     :'✔︎',
+		\ 'Unknown'   :'?',
+		\ }
+map <F3> :NERDTreeMirror <CR>
+map <F3> :NERDTreeToggle <CR>
+
+Plugin 'mxw/vim-jsx'
+Plugin 'mattn/emmet-vim'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'prettier/vim-prettier', {
+\ 'do': 'yarn install',
+\ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+
+let g:jsx_ext_required = 0
+let g:prettier#config#semi = 'true'
+let g:prettier#config#single_quote = 'false'
+let g:prettier#config#trailing_comma = 'none'
+let g:user_emmet_leader_key='<C-Z>'
+let g:user_emmet_settings = {
+\  'javascript' : {
+\      'extends' : 'jsx',
+\  },
+\}
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
+set foldmethod=syntax
+set conceallevel=1
+
+Plugin 'terryma/vim-multiple-cursors'
+
+Plugin 'godlygeek/tabular'
+
+Plugin 'plasticboy/vim-markdown'
+
+Plugin 'kien/ctrlp.vim'
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
+set wildignore+=*\\.git\\*,*\\tmp\\*,*.swp,*.zip,*.exe,*.pyc
+
+Plugin 'scrooloose/nerdcommenter'
+
+Plugin 'MarcWeber/vim-addon-mw-utils'
+
+Plugin 'tomtom/tlib_vim'
+
+Plugin 'garbas/vim-snipmate'
+
+Plugin 'keelii/vim-snippets'
+let g:snipMate = get(g:, 'snipMate', {})
+
+Plugin 'tpope/vim-fugitive'
+
+Plugin 'Shougo/neocomplete.vim'
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_auto_select = 1
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#snippets_directory=$VIM . '/vimfiles/bundle/vim-snippets/snippets'
+
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+
+filetype on
+call vundle#end()
+
+function! RemoveTrailingWhitespace()
+    if &ft != "diff"
+        let b:curcol = col(".")
+        let b:curline = line(".")
+        silent! %s/\s\+$//
+        silent! %s/\(\s*\n\)\+\%$//
+        call cursor(b:curline, b:curcol)
+    endif
+endfunction
+autocmd BufWritePre * call RemoveTrailingWhitespace()
