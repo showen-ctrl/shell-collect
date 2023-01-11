@@ -35,3 +35,20 @@ commit;
 
 或者以普通用户身份执行命令：mysqladmin -u root shutdown -p
 然后根据提示输入root密码即可。
+
+数据备份
+数据库备份
+备份数据库db1，将sql导出至/tmp/bak.sql
+mysqldump -u root -p db1 > /tmp/bak.sql
+备份多个数据库
+mysqldump -u root -p --databases db1 db2 db3 > /tmp/bak.sql
+备份所有数据库
+mysqldump -u -root -p -all-databases > /tmp/bak.sql
+数据表备份
+备份数据库db1的user表
+mysqldump -u root -p db1 user > /tmp/bak.sql
+备份多个表
+mysqldump -u root -p db1 user setting > /tmp/bak.sql
+数据还原
+从/tmp/bak.sql中还原
+mysql -u root -p db1 < /tmp/bak.sql
