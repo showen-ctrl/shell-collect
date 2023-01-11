@@ -1,0 +1,3 @@
+PERSIONID||VARCHAR2(20 BYTE)||自增id[:inc(id,1)]
+SEX||VARCHAR2(20 BYTE)||性别[:enum(file://sex.txt)]
+HOMETOWN||VARCHAR2(20 BYTE)||家乡[:enum(file://hometown.txt)]
