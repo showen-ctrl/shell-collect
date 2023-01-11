@@ -49,6 +49,7 @@ mysqldump -u -root -p -all-databases > /tmp/bak.sql
 mysqldump -u root -p db1 user > /tmp/bak.sql
 备份多个表
 mysqldump -u root -p db1 user setting > /tmp/bak.sql
+
 数据还原
-从/tmp/bak.sql中还原
-mysql -u root -p db1 < /tmp/bak.sql
+mysql -u root -p -e "create database manage_books_master";
+mysql -u root -p manage_books_master < C:\install_pj\book02\ManageBooks-master\dump_book.sql
